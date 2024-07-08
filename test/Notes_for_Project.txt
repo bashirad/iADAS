@@ -1,0 +1,167 @@
+This
+
+    "Expression #1 of SELECT list is not in GROUP BY clause and contains nonaggregated column
+        'returntr_prod.tbl_customer_pod_uploads.id' which is not functionally dependent on columns in GROUP BY clause;
+        this is incompatible with sql_mode=only_full_group_by"
+
+will be simply solved by changing the sql mode in MySQL by this command,
+
+    SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));
+
+The ADAS project contains many queries like this, so it is better to just change the sql mode to 'only_full_group_by'.
+
+OR simply include all columns in the GROUP BY clause that was specified by the SELECT statement.
+The sql_mode can be left enabled.
+
+Thank You... :-)
+
+/**
+ * stream level
+ * rainfall level
+ * Make sure the graphs.js can take input of date and rain level and then draw the chart.
+ * Make sure the graphs.js can take input of date and water level and then draw the chart.
+ * ____________________________________________________________________________________
+ * THIS IS HOW GETTING DATA WORKS:
+ * 1. CONNECT TO DATABASE
+    * APP.js:
+        1. Requires 'connection' in 'util/database'
+    * database.js:
+        1. requires 'mysql2' in 'node_modules'
+        1. requires 'config.json' in the ADAS folder 
+    * config.json:
+        1. includes all necessary connection details like host, user and database 
+APP.js 
+
+/* Create Route for first test file
+*  /data/tests1
+*/
+
+/**
+ * 
+ * 
+ */
+/*________________________________________________________________________________________________________________________*/
+
+<!DOCTYPE HTML>
+<html>
+<head>  
+<script>
+window.onload = function () {
+
+var chart = new CanvasJS.Chart("chartContainer", {
+	animationEnabled: true,
+	exportEnabled: true,
+	title:{
+		text: "Gold Medals Won in Olympics"             
+	}, 
+	axisY:{
+		title: "Number of Medals"
+	},
+	toolTip: {
+		shared: true
+	},
+	legend:{
+		cursor:"pointer",
+		itemclick: toggleDataSeries
+	},
+	data: [
+      {        
+		type: "spline",  
+		name: "US",        
+		showInLegend: true,
+		dataPoints: [
+			{ label: "Atlanta 1996" , y: 44 },     
+			{ label:"Sydney 2000", y: 37 },     
+			{ label: "Athens 2004", y: 36 },     
+			{ label: "Beijing 2008", y: 36 },     
+			{ label: "London 2012", y: 46 },
+			{ label: "Rio 2016", y: 46 }
+		]
+	}, 
+	{        
+		type: "spline",
+		name: "China",        
+		showInLegend: true,
+		dataPoints: [
+			{ label: "Atlanta 1996" , y: 16 },     
+			{ label:"Sydney 2000", y: 28 },     
+			{ label: "Athens 2004", y: 32 },     
+			{ label: "Beijing 2008", y: 48 },     
+			{ label: "London 2012", y: 38 },
+			{ label: "Rio 2016", y: 26 }
+		]
+	},
+	{        
+		type: "spline",  
+		name: "Britain",        
+		showInLegend: true,
+		dataPoints: [
+			{ label: "Atlanta 1996" , y: 1 },     
+			{ label:"Sydney 2000", y: 11 },     
+			{ label: "Athens 2004", y: 9 },     
+			{ label: "Beijing 2008", y: 19 },     
+			{ label: "London 2012", y: 29 },
+			{ label: "Rio 2016", y: 27 }
+		]
+	},
+	{        
+		type: "spline",  
+		name: "Russia",        
+		showInLegend: true,
+		dataPoints: [
+			{ label: "Atlanta 1996" , y: 26 },     
+			{ label:"Sydney 2000", y: 32 },     
+			{ label: "Athens 2004", y: 28 },     
+			{ label: "Beijing 2008", y: 22 },     
+			{ label: "London 2012", y: 20 },
+			{ label: "Rio 2016", y: 19 }
+		]
+	},
+	{        
+		type: "spline",  
+		name: "S Korea",        
+		showInLegend: true,
+		dataPoints: [
+			{ label: "Atlanta 1996" , y: 7 },     
+			{ label:"Sydney 2000", y: 8 },     
+			{ label: "Athens 2004", y: 9 },     
+			{ label: "Beijing 2008", y: 13 },     
+			{ label: "London 2012", y: 13 },
+			{ label: "Rio 2016", y: 9 }
+		]
+	},  
+	{        
+		type: "spline",  
+		name: "Germany",        
+		showInLegend: true,
+		dataPoints: [
+			{ label: "Atlanta 1996" , y: 20 },     
+			{ label:"Sydney 2000", y: 13 },     
+			{ label: "Athens 2004", y: 13 },     
+			{ label: "Beijing 2008", y: 16 },     
+			{ label: "London 2012", y: 11 },
+			{ label: "Rio 2016", y: 17 }
+		]
+	}]
+});
+
+chart.render();
+
+function toggleDataSeries(e) {
+	if(typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+		e.dataSeries.visible = false;
+	}
+	else {
+		e.dataSeries.visible = true;            
+	}
+	chart.render();
+}
+
+}
+</script>
+</head>
+<body>
+<div id="chartContainer" style="height: 370px; width: 100%;"></div>
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+</body>
+</html>
